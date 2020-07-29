@@ -1,0 +1,190 @@
+{
+	"groups": [
+		{
+			"keys": "egret_icon_png,description_json,bt_png,cw_png,jump_mp3,rocket_png,ballrotation_json,ballrotation_png,ballskin1_json,ballskin1_png,ballparticle_png,ballparticle_json,tail_json,tail_png,mybg_jpg,bg_jpg,skinbtn_png,ballskin2_json,ballskin2_png,pointer_png,returnbtn_png,ballskindis2_png,ballskindis1_png,check_json,plate_png,floor_png,floorDisappear_png,plateDisappear_png,CMTrigger_png,edgeball_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/egret_icon.png",
+			"type": "image",
+			"name": "egret_icon_png"
+		},
+		{
+			"url": "config/description.json",
+			"type": "json",
+			"name": "description_json"
+		},
+		{
+			"url": "bt.png",
+			"type": "image",
+			"name": "bt_png"
+		},
+		{
+			"url": "cw.png",
+			"type": "image",
+			"name": "cw_png"
+		},
+		{
+			"url": "lay1.png",
+			"type": "image",
+			"name": "lay1_png"
+		},
+		{
+			"url": "lay2.png",
+			"type": "image",
+			"name": "lay2_png"
+		},
+		{
+			"url": "lay3.png",
+			"type": "image",
+			"name": "lay3_png"
+		},
+		{
+			"url": "lay4.png",
+			"type": "image",
+			"name": "lay4_png"
+		},
+		{
+			"url": "lay5.png",
+			"type": "image",
+			"name": "lay5_png"
+		},
+		{
+			"url": "lay6.png",
+			"type": "image",
+			"name": "lay6_png"
+		},
+		{
+			"url": "jump.mp3",
+			"type": "sound",
+			"name": "jump_mp3"
+		},
+		{
+			"url": "coin.png",
+			"type": "image",
+			"name": "rocket_png"
+		},
+		{
+			"url": "ballrotation.json",
+			"type": "json",
+			"name": "ballrotation_json"
+		},
+		{
+			"url": "ballrotation.png",
+			"type": "image",
+			"name": "ballrotation_png"
+		},
+		{
+			"url": "ballrotation2.json",
+			"type": "json",
+			"name": "ballskin1_json"
+		},
+		{
+			"url": "ballrotation2.png",
+			"type": "image",
+			"name": "ballskin1_png"
+		},
+		{
+			"url": "ballparticle.png",
+			"type": "image",
+			"name": "ballparticle_png"
+		},
+		{
+			"url": "ballparticle.json",
+			"type": "json",
+			"name": "ballparticle_json"
+		},
+		{
+			"url": "tail.json",
+			"type": "json",
+			"name": "tail_json"
+		},
+		{
+			"url": "tail.png",
+			"type": "image",
+			"name": "tail_png"
+		},
+		{
+			"url": "mybg.jpg",
+			"type": "image",
+			"name": "mybg_jpg"
+		},
+		{
+			"url": "bg.jpg",
+			"type": "image",
+			"name": "bg_jpg"
+		},
+		{
+			"url": "skinbtn.png",
+			"type": "image",
+			"name": "skinbtn_png"
+		},
+		{
+			"url": "ballskin2.json",
+			"type": "json",
+			"name": "ballskin2_json"
+		},
+		{
+			"url": "ballskin2.png",
+			"type": "image",
+			"name": "ballskin2_png"
+		},
+		{
+			"url": "pointer.png",
+			"type": "image",
+			"name": "pointer_png"
+		},
+		{
+			"url": "returnbtn.png",
+			"type": "image",
+			"name": "returnbtn_png"
+		},
+		{
+			"url": "ballskindis2.png",
+			"type": "image",
+			"name": "ballskindis2_png"
+		},
+		{
+			"url": "ballskindis1.png",
+			"type": "image",
+			"name": "ballskindis1_png"
+		},
+		{
+			"url": "check.json",
+			"type": "json",
+			"name": "check_json"
+		},
+		{
+			"url": "plate.png",
+			"type": "image",
+			"name": "plate_png"
+		},
+		{
+			"url": "floor.png",
+			"type": "image",
+			"name": "floor_png"
+		},
+		{
+			"url": "floorDisappear.png",
+			"type": "image",
+			"name": "floorDisappear_png"
+		},
+		{
+			"url": "plateDisappear.png",
+			"type": "image",
+			"name": "plateDisappear_png"
+		},
+		{
+			"url": "CMTrigger.png",
+			"type": "image",
+			"name": "CMTrigger_png"
+		},
+		{
+			"name": "edgeball_png",
+			"type": "image",
+			"url": "edgeball.png"
+		}
+	]
+}

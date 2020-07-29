@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="愉快饭"><meta name="description" content="游戏开发学习博客"><link rel="alternative" href="/atom.xml" title="愉快饭的博客" type="application/atom+xml"><link rel="icon" href="images/favicon.png"><title>DamageSys - 愉快饭的博客</title><link rel="stylesheet" href="../../../../css/main.css"><link rel="stylesheet" href="../../../../js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="../../../../js/jquery-3.1.1.min.js"></script><script src="../../../../js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">愉快饭的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="../../../../tags">标签</a></li><li class="head-nav__item"><a class="head-nav__link" href="../../../../archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"><time class="post__time" datetime="2019-08-16T04:11:28.000Z">2019 - 08 - 16 12:11:28</time><h1 class="post__title"><a href>DamageSys</a></h1><div class="post__main echo"><blockquote>
+<p>两纵排壮汉站左右两边激情♂︎互射，每个壮汉都有等级，血量，护甲，攻击力等基础属性。还有技能属性。等级大于技能开启值才拥有技能</p>
+</blockquote>
+<h1 id="怎么设计伤害系统。"><a href="#怎么设计伤害系统。" class="headerlink" title="怎么设计伤害系统。"></a>怎么设计伤害系统。</h1><ol>
+<li><p>首先得对壮汉信息进行储存和管理</p>
+<ul>
+<li><p>当然直接设计一个class Guy</p>
+<figure class="highlight plain"><figcaption><span>lang: TS</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Guy&#123;</span><br><span class="line">    Level:number;</span><br><span class="line">    HP:number;</span><br><span class="line">    shield:number;</span><br><span class="line">    ATK:number;</span><br><span class="line">    skill:number[];//改壮汉所有的技能索引，又有skill都在表中</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>互相伤害的机制</p>
+<ol>
+<li>A射B，发射子弹，子弹携带A的attackMsg:AttackMsg;<ul>
+<li>attackMsg会根据角色技能初始化<figure class="highlight plain"><figcaption><span>lang: TS</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class AttackMsg&#123;</span><br><span class="line">    source:obj;</span><br><span class="line">    ATK:number;//基础攻击</span><br><span class="line">    critical:number;//暴击</span><br><span class="line">    //等对ATK数值的影响</span><br><span class="line">    debuff:[];//眩晕，灼烧，减攻速，破甲等</span><br><span class="line">    pingpongSurplus:number=0;//剩余弹射次数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>子弹调用B的beAttack(attackMsg:AttackMsg);/* 根据自身技能进行处理*/HP减少，掉血表现<ul>
+<li>是否有debuff免疫，如果没有就查看msg是否有debuff。有就改变状态，若状态被改变<ul>
+<li>重新生成自己的attackMsg，对每个debuff定时</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>对debuff的处理<br> 依据debuff和自身状态，技能改变自身状态。初始化计时器，重复m次，每次间隔1秒</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>hero</th>
+<th align="center">level</th>
+<th align="center">HP</th>
+<th align="center">shield</th>
+<th align="center">ATK</th>
+<th align="center">skill1</th>
+<th align="center">skill2</th>
+<th align="center">skill3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td align="center">1</td>
+<td align="center">100</td>
+<td align="center">100</td>
+<td align="center">20</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>2</td>
+<td align="center">3</td>
+<td align="center">200</td>
+<td align="center">100</td>
+<td align="center">10</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<ol start="4">
+<li>技能<ol>
+<li>根据触发流程。<ul>
+<li>随机触发或每隔一段时间触发，比如无敌，</li>
+<li>攻击前具有，比如加攻击力，加护甲，加血量，暴击 ，吸血，眩晕，护盾等</li>
+<li>攻击时积累，比如狂热（每次攻击加攻速），vn的三连</li>
+<li>被攻击时触发，，反弹，免疫特效</li>
+<li>攻击对象死亡时反馈</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>人物属性<ol>
+<li>固有状态，血量，护甲，护盾剩余，命中，暴击，是否有灼烧等</li>
+<li>将消失的状态，，是否无敌，是否被灼烧，被眩晕，被减速。</li>
+<li>随机属性,间隔属性，无敌。</li>
+<li>攻击积累效果，加攻速，vn第三圈真伤。</li>
+<li>被攻击时效果，魔免，当前是否无敌，反弹等</li>
+<li>死亡时触发效果，给队友增益，给对手反馈等。</li>
+</ol>
+</li>
+<li>流程<ol>
+<li>人物初始化，读取技能，初始化固有状态，初始化自身attackMsg，被攻击效果，死亡效果</li>
+<li>人物攻击，向对象传递attackMsg<del>调用对方的被攻击函数</del>，自身攻击积累处理函数</li>
+<li>收击角色处理attackMsg。被攻击时效果。对attackMsg的source进行反馈</li>
+<li>若角色死亡，调用死亡时反馈。</li>
+<li>跟新每个角色随机属性。是否无敌。，处理将消失的状态。</li>
+</ol>
+</li>
+</ol>
+</div></header><footer class="post__foot u-cf"><ul class="post__tag u-fl"><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/互相伤害系统/">互相伤害系统</a></li></ul></footer></article></main><footer class="foot"><div class="foot-copy">&copy; 2016 - 2020 愉快饭</div></footer><script src="../../../../js/scroller.js"></script><script src="../../../../js/main.js"></script></body></html>

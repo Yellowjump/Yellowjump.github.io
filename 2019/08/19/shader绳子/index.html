@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="愉快饭"><meta name="description" content="游戏开发学习博客"><link rel="alternative" href="/atom.xml" title="愉快饭的博客" type="application/atom+xml"><link rel="icon" href="images/favicon.png"><title>shader绳子 - 愉快饭的博客</title><link rel="stylesheet" href="../../../../css/main.css"><link rel="stylesheet" href="../../../../js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="../../../../js/jquery-3.1.1.min.js"></script><script src="../../../../js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">愉快饭的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="../../../../tags">标签</a></li><li class="head-nav__item"><a class="head-nav__link" href="../../../../archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"><time class="post__time" datetime="2019-08-19T12:58:45.000Z">2019 - 08 - 19 20:58:45</time><h1 class="post__title"><a href>shader绳子</a></h1><div class="post__main echo"><blockquote>
+<p>近期又没有任务，于是打算做完绳子<del>橡皮筋</del></p>
+</blockquote>
+<h2 id="先说思路"><a href="#先说思路" class="headerlink" title="先说思路"></a>先说思路</h2><ul>
+<li><p>前期已经靠绘制系统画好了绳子，但是可惜线条不支持图片的填充。于是想着用shader使一个<del>或多个</del>绳子片段伸长或弯曲。来达到画绳子的效果。</p>
+</li>
+<li><p>所需要的接口</p>
+<ol>
+<li>lineTo(pos1,pos2,width)</li>
+<li>moveTo(pos1,width)</li>
+<li>circle()</li>
+<li>arc()  //保存弧线路径</li>
+<li>strike  //画出所有保存的路线<h1 id="8-21"><a href="#8-21" class="headerlink" title="8-21"></a>8-21</h1></li>
+</ol>
+</li>
+<li><p>想要实现的话</p>
+<blockquote>
+<p><del>原本只有四个定点，拉长或者旋转还好说，但是弧线的话，要么就多个片段，即每个弧线都用一个obj，要么就添加顶点。</del></p>
+</blockquote>
+<blockquote>
+<p><del>思考了一下，发现不能太改动顶点着色，而应该改变片元着色。对没有的地方透明度为0。现在考虑的是每个片段用一个obj。毕竟更方便或是更常见的方式我还没学，先这样试试吧。</del></p>
+</blockquote>
+<ol>
+<li><p><del>直线部分。这部分应该是其中最简单的。pos1，pos2，为世界坐标。更改modelMat</del></p>
+<blockquote>
+<p>做完了之后发现虽然能调节长度和uv偏移但是由于有很多的长度和uv偏移不同的线，给每个线段一个材质又感觉浪费。故该方法好像不行，<del>我好难啊</del></p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+</div></header><footer class="post__foot u-cf"><ul class="post__tag u-fl"><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/cocos/">cocos</a></li><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/绳子/">绳子</a></li><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/shader/">shader</a></li></ul></footer></article></main><footer class="foot"><div class="foot-copy">&copy; 2016 - 2020 愉快饭</div></footer><script src="../../../../js/scroller.js"></script><script src="../../../../js/main.js"></script></body></html>

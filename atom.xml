@@ -1,0 +1,441 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>愉快饭的博客</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yukuaifan.xyz/"/>
+  <updated>2020-07-28T10:42:56.410Z</updated>
+  <id>http://yukuaifan.xyz/</id>
+  
+  <author>
+    <name>愉快饭</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>字节跳动凉面筋</title>
+    <link href="http://yukuaifan.xyz/2019/10/15/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%E5%87%89%E9%9D%A2%E7%AD%8B/"/>
+    <id>http://yukuaifan.xyz/2019/10/15/字节跳动凉面筋/</id>
+    <published>2019-10-15T11:52:15.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>啊，我感觉我不行了，我还是回家种田好了。<del>你明明在笑我，你都没停过</del></p></blockquote><p>照例记录面试问题</p><ol><li>自我介绍</li><li>自己的优缺点各两个</li><li>比赛项目<ul><li>怎么想做一款2D横版过关游戏呢</li></ul></li><li>印象最深的3款游戏<ul><li>其实我想说nekopara</li></ul></li><li>实习期间最困难的时候<ul><li>顺带说了说<a href="http://yukuaifan.xyz/project/rope">橡皮筋</a></li></ul></li><li>查找用户信息，vector和map存储各自利弊<ul><li>我没用过map，(但是好像就是c#里的dictionary)哭唧唧。</li></ul></li><li>虚函数表，存在哪里</li><li>你还有什么想问的<ul><li>脑袋崩了，问个你们公司是不是在开发mmorpg，emmm，我，算了算了。</li></ul></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;啊，我感觉我不行了，我还是回家种田好了。&lt;del&gt;你明明在笑我，你都没停过&lt;/del&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;照例记录面试问题&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;自我介绍&lt;/li&gt;
+&lt;li&gt;自己的优缺点各两个&lt;/li&gt;
+&lt;li&gt;比赛项目
+      
+    
+    </summary>
+    
+    
+      <category term="凉面经" scheme="http://yukuaifan.xyz/tags/%E5%87%89%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>幸运转盘的实现</title>
+    <link href="http://yukuaifan.xyz/2019/10/15/%E5%B9%B8%E8%BF%90%E8%BD%AC%E7%9B%98%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://yukuaifan.xyz/2019/10/15/幸运转盘的实现/</id>
+    <published>2019-10-15T03:06:54.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>昨天要实现一个幸运转盘，当然秉承着view服务于model的理念，当然得说转到几，转盘就转到几。</p></blockquote><p>1。首先是实例化，不多说上个代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">void WheelInit()&#123;</span><br><span class="line">    var tempItemsDate=new List&lt;rewardItemDate&gt;&#123;</span><br><span class="line">        new rewardItemDate(1,1000),</span><br><span class="line">        new rewardItemDate(1,2000),</span><br><span class="line">        new rewardItemDate(1,3000),</span><br><span class="line">        new rewardItemDate(1,4000),</span><br><span class="line">        new rewardItemDate(1,5000),</span><br><span class="line">        new rewardItemDate(2,6),</span><br><span class="line">        new rewardItemDate(2,7),</span><br><span class="line">        new rewardItemDate(2,8),</span><br><span class="line">        new rewardItemDate(2,9),</span><br><span class="line">        new rewardItemDate(2,10)</span><br><span class="line">    &#125;;//10个item</span><br><span class="line">    itemsDate=tempItemsDate;</span><br><span class="line">    for(var itemNum=0;itemNum&lt; itemsDate.Count;itemNum++)&#123;</span><br><span class="line">        var itemTra= Instantiate(wheelRewardItemPrefab,itemParent.positionQuaternion.Euler(0,0,-36*itemNum),itemParent);</span><br><span class="line">        ItemInit(itemTra,itemNum);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>2。提供按钮接口</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public void WhirlButton()&#123;</span><br><span class="line">    if(canWhirl)&#123;</span><br><span class="line">        canWhirl=false;</span><br><span class="line">        int result=Random.Range(0,10);//这里每一项概率平均，没有加权</span><br><span class="line">        Debug.Log(&quot;wheelResult:&quot;+result);</span><br><span class="line">        </span><br><span class="line">        StartCoroutine(Whirligig(result));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">IEnumerator Whirligig(int result)&#123;</span><br><span class="line">    float time=0;</span><br><span class="line">    //转个5圈加 (360-36*result)度</span><br><span class="line">    int rotateAngle=1800+(360-result*36);//总要旋转的度数</span><br><span class="line">    var wheelTrans=itemParent.parent;</span><br><span class="line">    var tempZ=0f;//z值会%=360，所以需要一个值暂存</span><br><span class="line">    wheelTrans.rotation=new Quaternion(0,0,0,0);//归零消除上次旋转的偏移角，当然也可以保留对下次进行但懒得改</span><br><span class="line">    while((time+=Time.deltaTime)&lt;4f)&#123;</span><br><span class="line">        tempZ=(-rotateAngle)*wheelSpeed.Evaluate(time/4f);</span><br><span class="line">        wheelTrans.rotation=Quaternion.Euler(0,0,tempZ);</span><br><span class="line">        yield return null;</span><br><span class="line">    &#125;</span><br><span class="line">    wheelTrans.rotation=Quaternion.Euler(0,0,-rotateAngle);</span><br><span class="line">    canWhirl=true;</span><br><span class="line">    yield return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>3。设置Curve<br><img src="/images/turnTableCurve.png" alt="Curve图片"></p><blockquote><p><a href="https://github.com/Yellowjump/TurnTable" target="_blank" rel="noopener">项目github地址</a></p></blockquote><blockquote><p><a href="http://yukuaifan.xyz/project/turnTable">部署在page上的项目</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;昨天要实现一个幸运转盘，当然秉承着view服务于model的理念，当然得说转到几，转盘就转到几。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;1。首先是实例化，不多说上个代码&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://yukuaifan.xyz/tags/unity/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于mvc的瞎扯</title>
+    <link href="http://yukuaifan.xyz/2019/10/14/%E5%85%B3%E4%BA%8Emvc%E7%9A%84%E7%9E%8E%E6%89%AF/"/>
+    <id>http://yukuaifan.xyz/2019/10/14/关于mvc的瞎扯/</id>
+    <published>2019-10-14T02:39:50.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>最近的调研项目整体比较大，为了更快速的进行程序迭代和结构功能修改，了解mvc框架，这里记录一下个人理解。</p></blockquote><p>距个人用unity写Demo也算有两年了<del>虽然实际使用可能半年不到</del>,实习以前并没有学习了解框架。</p><p>因此，管理结构最常用就是 <font color="orange">常规的面向对象</font>，一个物体有什么属性，他有什么方法，他的材质，颜色，都在他一个类中设置。我暂且形容为<strong>村民框架</strong>。</p><p>在村民框架里，你可以设置村长<del>manager</del>，设置广播站<del>message</del>。假如<strong>功能1</strong>:村民vA打了村民vB。那么就调用vA中的Attack(villager target)，方法中播放动画实现攻击效果啊，以及调用target也就是vB的beAttack()方法。</p><p>对于<strong>功能2</strong>，很直接清晰明了，但是来个更复杂一点的功能2:vA和vB互殴，但我们若直接在beAttack()中调用attack，难么我们就只能看到一个村民倒在地上的互殴结果。要想在攻击动画结束再进行下一次攻击。只要监听动画的结束事件回调attack()就好;现在我们就可以看到两个村民一下一下的攻击，直到一方倒地。</p><p>看起来功能2也没有任何问题。但是，我们得到的战斗结果，也得是n秒之后，若有<strong>功能3</strong>:按钮button：跳过冗长无聊的战斗过程，直接看到哪个村民倒地不起。那么我们就得再写一个<strong>方法quick</strong>，根据两村民的数值快速战斗，获取战斗结果。根据结果改变 让村民vA躺下，让vB胜利欢呼之类。但是很明显<strong>功能3</strong>和<strong>功能2</strong>就只有等待动画播放完毕这些代码不同，若更改需求比如更复杂的技能，攻速，每次就得更改两处。</p><p><code>个人瞎扯经验：让model和view杂糅在一起会不利于迭代，尤其是view会改变的时候</code></p><p>前辈和我讲mvc，写了一大片，我记住的就是：<font color="#0f9faf">mc不知道 view的存在，没有view，程序依然能跑</font>。</p><p>现在用mvc思路实现<del>鄙人mvc</del>实现<strong>功能3</strong>:<strong>方法quick**</strong>中每次循环记录到string中，比如“a attack b ,b.hp-=10,battleEnd=false”之类，广播出去，view层监听事件，根据string执行动画。<del>有点命令模式的调调</del></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;最近的调研项目整体比较大，为了更快速的进行程序迭代和结构功能修改，了解mvc框架，这里记录一下个人理解。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;距个人用unity写Demo也算有两年了&lt;del&gt;虽然实际使用可能半年不到&lt;/del&gt;,实习以前并没
+      
+    
+    </summary>
+    
+    
+      <category term="mvc" scheme="http://yukuaifan.xyz/tags/mvc/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>多态瞎谈</title>
+    <link href="http://yukuaifan.xyz/2019/10/11/%E5%A4%9A%E6%80%81%E7%9E%8E%E8%B0%88/"/>
+    <id>http://yukuaifan.xyz/2019/10/11/多态瞎谈/</id>
+    <published>2019-10-11T09:45:59.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<p>废话少说直接上代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">class base&#123;</span><br><span class="line">    public:</span><br><span class="line">    void normalFunc()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;base normalFunc&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    virtual void virtualFunc()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;base virtualFunc&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    void func()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;base func&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">class child:public base&#123;</span><br><span class="line">public:</span><br><span class="line">    void normalFunc()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;child normalFunc&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    virtual void virtualFunc()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;child virtualFunc&quot;&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    void func(int i)&#123;</span><br><span class="line">        cout&lt;&lt;&quot;child func&quot;&lt;&lt;i&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    virtual void virtualChildFunc()&#123;</span><br><span class="line">        cout&lt;&lt;&quot;only in child&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef void (*pFun)();//函数指针</span><br><span class="line">int main(int argc, const char * argv[]) &#123;</span><br><span class="line">    base bquote= child();//赋值给bquote,存储在栈空间base bquote;bquote=child();</span><br><span class="line">    base *b=new child();</span><br><span class="line">    b-&gt;normalFunc();</span><br><span class="line">    b-&gt;virtualFunc();//可以用虚函数表地址访问virtualChildFunc(),但是出现了错误🤷‍♂️</span><br><span class="line">    b-&gt;func();//b-&gt;func(3)会报错</span><br><span class="line">    bquote.normalFunc();</span><br><span class="line">    bquote.virtualFunc();</span><br><span class="line">    delete b;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">//输出结果⬇</span><br><span class="line">//base normalFunc</span><br><span class="line">//child virtualFunc</span><br><span class="line">//base func</span><br><span class="line">//base normalFunc</span><br><span class="line">//base virtualFunc</span><br></pre></td></tr></table></figure><p>父类指针*f指向子类实例，f-&gt;virtualfunc()执行的是虚函数表中的函数，被子类重写了虚函数表。f-&gt;normalfunc()执行的还是自身作用域的函数。</p><blockquote><p>场景，一堆小怪都继承enemy，有不同的attack()，管理器中小怪的指针数组，都调用attack()就可以实现不同的攻击效果。</p></blockquote><p>最后放一个带佬链接，<a href="https://blog.csdn.net/haoel/article/details/1948051" target="_blank" rel="noopener">虚函数详解</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;废话少说直接上代码&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/spa
+      
+    
+    </summary>
+    
+    
+      <category term="c++" scheme="http://yukuaifan.xyz/tags/c/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>雷火凉面筋</title>
+    <link href="http://yukuaifan.xyz/2019/10/08/%E9%9B%B7%E7%81%AB%E5%87%89%E9%9D%A2%E7%AD%8B/"/>
+    <id>http://yukuaifan.xyz/2019/10/08/雷火凉面筋/</id>
+    <published>2019-10-08T03:22:02.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>面试早晨的地铁上遇到了极像新垣结衣的小姐姐，可惜没有追上去要微信号，就算是被拒绝。</p></blockquote><h1 id="正题"><a href="#正题" class="headerlink" title="正题"></a>正题</h1><p>一面女面试官还是非常好说话，先是照常自我介绍，巴拉巴拉，然后开始问问题。</p><p>1.概率题<br>一个女角色，是一个女玩家的概率</p><table><thead><tr><th>玩家性别及占比</th><th align="center">使用男角色概率</th><th align="center">使用女角色概率</th></tr></thead><tbody><tr><td>男玩家占90%</td><td align="center">50%</td><td align="center">50%</td></tr><tr><td>女玩家占10%</td><td align="center">20%</td><td align="center">80%</td></tr></tbody></table><p>2.排序算法，哪些是稳定的，手写快排</p><p>3.unity最熟悉什么？</p><pre><code>答 生命周期，然后说了下游戏循环中update和fixedupdate。</code></pre><p>4.项目中的陀螺仪控制小球，速度是怎么给定的</p><pre><code>大二时候弄的，没去看，记忆里没有就蒙了，就说忘了，面试官就换了个问题。现在想想直接就是根据陀螺仪gravity的（x,y）来给定的。</code></pre><p>在沙发上坐了大半小时后二面<br>1.自我介绍<br>2.算法题，leetcode上的，<a href="https://leetcode-cn.com/problems/3sum/" target="_blank" rel="noopener">三数只和</a>,我题做的太少，做过两数之和，还是暴力法。写了个x3原地爆炸，问有没有更快的，蒙了脑袋转不动。<br>3.问c#闭包</p><pre><code>答，没听过，跟ab包有关吗，~~作死 ab包也不是很熟~~</code></pre><p>4.问ab包，做什么用的</p><p>5.lua用过吗</p><p>6.一个青蛙跳台阶类似算法题。</p><p>然后惯例说还有什么问的吗</p><pre><code>随便问了点mvc框架会在游戏研发中使用吗</code></pre><p>这辈子最后一次在猪厂吃饭，可能去的窗口不适合，感觉一般般，腊肉丸子，貌似就这天上火然后裂开了口腔溃疡。遇到一投测试岗老哥，同样没进到下午场，然后我们就开心的去游西湖😂。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;面试早晨的地铁上遇到了极像新垣结衣的小姐姐，可惜没有追上去要微信号，就算是被拒绝。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;正题&quot;&gt;&lt;a href=&quot;#正题&quot; class=&quot;headerlink&quot; title=&quot;正题&quot;&gt;&lt;/a&gt;正题&lt;/
+      
+    
+    </summary>
+    
+    
+      <category term="凉面经" scheme="http://yukuaifan.xyz/tags/%E5%87%89%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>unity中协程使用</title>
+    <link href="http://yukuaifan.xyz/2019/09/27/unity%E4%B8%AD%E5%8D%8F%E7%A8%8B%E4%BD%BF%E7%94%A8/"/>
+    <id>http://yukuaifan.xyz/2019/09/27/unity中协程使用/</id>
+    <published>2019-09-27T12:15:49.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>点一下，人物以速度v前进m距离或者s时间。我以前要么update中写分支，要么弄成动画。现在才发现协程那么方便。</p></blockquote><p>协程概念很多大佬都讲的非常明白，这里放个地址<a href="https://blog.csdn.net/hhh132/article/details/78937146。" target="_blank" rel="noopener">https://blog.csdn.net/hhh132/article/details/78937146。</a></p><p>那么直接上代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveByPosAndTime(Vector3 startPos,Vector3 endPos,float time=0.5f)&#123;</span><br><span class="line">    float dur = 0.0f;</span><br><span class="line">    while(dur&lt;=time)</span><br><span class="line">    &#123;</span><br><span class="line">        dur += Time.deltaTime;</span><br><span class="line">        transform.localPosition = Vector3.Lerp(startPos, endPos+playerOffset, dur/time);</span><br><span class="line">        //Debug.Log(dur+&quot;\t&quot;+transform.localPosition+&quot;\tstart:&quot;+startPos);</span><br><span class="line">        yield return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>即是每帧执行MoveByPosAndTime中语句直到yield return。</p><p>如果是飞行棋这样的。同样也可以</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveGrids(int Num,float speed=1f)&#123;    </span><br><span class="line">    yield return new WaitForSeconds(2f);//移动前停留，主要是等骰子动画完成</span><br><span class="line">    while(Num&gt;0)&#123;</span><br><span class="line">        yield return MoveByPosAndTime(curGrid.position,nextGrid.position,0.5/speed);</span><br><span class="line">        curGrid=nextGrid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;点一下，人物以速度v前进m距离或者s时间。我以前要么update中写分支，要么弄成动画。现在才发现协程那么方便。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;协程概念很多大佬都讲的非常明白，这里放个地址&lt;a href=&quot;https://blog.cs
+      
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://yukuaifan.xyz/tags/unity/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>洗牌算法</title>
+    <link href="http://yukuaifan.xyz/2019/09/10/%E6%B4%97%E7%89%8C%E7%AE%97%E6%B3%95/"/>
+    <id>http://yukuaifan.xyz/2019/09/10/洗牌算法/</id>
+    <published>2019-09-10T03:46:48.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>看面经过程中看到了洗牌算法，自己也来总结记录哈。<br>参考的大佬文章:<br><a href="https://blog.csdn.net/qq_26399665/article/details/79831490" target="_blank" rel="noopener">https://blog.csdn.net/qq_26399665/article/details/79831490</a><br><a href="http://c.biancheng.net/view/1352.html" target="_blank" rel="noopener">http://c.biancheng.net/view/1352.html</a></p></blockquote><h1 id="rand和srand"><a href="#rand和srand" class="headerlink" title="rand和srand"></a>rand和srand</h1><ul><li><p>在说洗牌算法前，先说说c++随机数。</p><p>  C++ 库有一个名为 rand()的函数，范围在0至RAND_MAX 间。RAND_MAX定义在stdlib.h, 其值为2147483647。并且，该函数返回的数字其实是伪随机数。该算法需要一个起始值，称为种子，以生成数字。如果没有给出一个种子，那么它将在每次运行时产生相同的数字流。</p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main() &#123;</span><br><span class="line">    for(int i=0;i&lt;10;i++)</span><br><span class="line">        cout&lt;&lt;rand()%10&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">//    两次运行结果相同。</span><br></pre></td></tr></table></figure></li></ul><ul><li><p>要在每次运行程序时获得不同的随机数字流，则必须为随机数生成器提供一个种子以开始。在 C++ 中，这是通过调用 srand 函数完成的。在 rand 被调用之前，srand 函数要先被调用，并且 srand 在整个程序中仅被调用一次。</p><p>  获取种子值的另一个常见做法是调用 time 函数，它是 C++ 标准库的一部分。</p><p>  time 函数返回从 1970 年 1 月 1 日午夜开始到现在逝去的秒数，因此每次运行程序时，它都将提供不同的种子值。下面程序演示了 time 函数的用法。请注意，在调用它时必须给它传递一个参数 0。同时程序中包含一个新的头文件 ctime，此头文件是使用 time 函数所必需的。<del>但在xcode中不添加头文件也能运行</del></p>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main() &#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    for(int i=0;i&lt;10;i++)&#123;</span><br><span class="line">        cout&lt;&lt;rand()%10&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">//每次运行结果不同</span><br></pre></td></tr></table></figure></li></ul><h1 id="洗牌算法"><a href="#洗牌算法" class="headerlink" title="洗牌算法"></a>洗牌算法</h1><ul><li>由抽牌、换牌和插牌衍生出三种洗牌算法，其中抽牌和换牌分别对应Fisher-Yates Shuffle和Knuth-Durstenfeld Shhuffle算法。<ol><li>Fisher-Yates Shuffle算法<blockquote><p>原始数组n中随机抽k个数。</p></blockquote><ol><li>随机从原始数组中取一个，装入新数组。</li><li>压缩原始数组</li><li>新数组大小若未满k，重复步骤1，2.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void Fisher_Yates_Shuffle(vector&lt;int&gt;&amp; arr,vector&lt;int&gt;&amp; res,int k)</span><br><span class="line">&#123;</span><br><span class="line">    if(k&gt;arr.size())return;</span><br><span class="line">    srand((int)time(0));</span><br><span class="line">    int r;</span><br><span class="line">    for (int i=0;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        r=rand()%arr.size();</span><br><span class="line">        res.push_back(arr[r]);</span><br><span class="line">        arr.erase(arr.begin()+r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//时间复杂度为O(n*n),空间复杂度为O(n).</span><br></pre></td></tr></table></figure></li></ol></li><li>Knuth-Durstenfeld Shuffle算法<blockquote><p>Knuth 和 Durstenfeld  在Fisher 等人的基础上对算法进行了改进，在原始数组上对数字进行交互，省去了额外O(n)的空间</p></blockquote><ol><li>从n-i中随机选择一位，将其与第n-i位交换，i++</li><li>若i==k，结束，否则重复步骤1.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void Knuth_Durstenfeld_Shuffle(vector&lt;int&gt;&amp;arr,int k)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i=0;i&lt;k;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    swap(arr[rand()%(arr.size()-1-i)],arr[arr.size()-1-i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//获取的k个随机数在原始数组末尾的k位。原始数组被修改了，这是一个原地打乱顺序的算法。</span><br><span class="line">//时间复杂度为O(n),空间复杂度为O(1),缺点必须知道数组长度n.</span><br></pre></td></tr></table></figure></li></ol></li></ol></li></ul><h1 id="蓄水池抽样"><a href="#蓄水池抽样" class="headerlink" title="蓄水池抽样"></a>蓄水池抽样</h1><ul><li><p>同样是从n个数中抽取k个，但是如果n非常大或者不确定<del>总之就是没法一次性的将原始数据装入内存</del>，那么这个时候问题就是蓄水池抽样。</p><blockquote><p>思路:我们先抽前k个，在依次循环判断后面的n-k个数，每个数被选中的概率是k/x。(x为该数在原始数组中的位置)，若被选中，替换k中随机一个。</p></blockquote>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">void Reservoir_Sampling(vector&lt;int&gt;&amp; arr,int k)</span><br><span class="line">&#123;</span><br><span class="line">    int r;</span><br><span class="line">    for (int i=k;i&lt;arr.size();++i)</span><br><span class="line">    &#123;</span><br><span class="line">        srand((int)time(0));</span><br><span class="line">        r=rand()%(i+1);</span><br><span class="line">        if (r&lt;k)</span><br><span class="line">        swap(arr[r],arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//以上为在原数组中交换，时间复杂度为O(n)。</span><br><span class="line">//一下为数组指针</span><br><span class="line">void Reservoir_Sampling_Pointerconst( int *input, int n, int *result, int m)</span><br><span class="line">&#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    if (n &lt; m || input == NULL || result == NULL)return;</span><br><span class="line">    for (int i = 0; i != m; ++i)</span><br><span class="line">        result[i] = input[i];        </span><br><span class="line">    for (int i = m; i != n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int j = rand()%i;</span><br><span class="line">        if (j &lt; m)</span><br><span class="line">        result[j] = input[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;看面经过程中看到了洗牌算法，自己也来总结记录哈。&lt;br&gt;参考的大佬文章:&lt;br&gt;&lt;a href=&quot;https://blog.csdn.net/qq_26399665/article/details/79831490&quot; target=&quot;_blank&quot;
+      
+    
+    </summary>
+    
+    
+      <category term="c++" scheme="http://yukuaifan.xyz/tags/c/"/>
+    
+      <category term="算法" scheme="http://yukuaifan.xyz/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>模型剔除</title>
+    <link href="http://yukuaifan.xyz/2019/08/28/%E6%A8%A1%E5%9E%8B%E5%89%94%E9%99%A4/"/>
+    <id>http://yukuaifan.xyz/2019/08/28/模型剔除/</id>
+    <published>2019-08-28T03:03:10.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>闲来无事想起了模型剔除这么帅气的功能，心想也学了两章openGL，不如就去网上找找简单实现一下效果</p></blockquote><p><a href="https://www.bilibili.com/video/av21856422" target="_blank" rel="noopener">大佬的模型剔除链接</a></p><p>我的模型剔除</p><p><img src="/images/gif_animation_002.gif" alt="moxingtichu"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;闲来无事想起了模型剔除这么帅气的功能，心想也学了两章openGL，不如就去网上找找简单实现一下效果&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/av21856422&quot; t
+      
+    
+    </summary>
+    
+    
+      <category term="unity" scheme="http://yukuaifan.xyz/tags/unity/"/>
+    
+      <category term="shader" scheme="http://yukuaifan.xyz/tags/shader/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>互娱研发凉面经</title>
+    <link href="http://yukuaifan.xyz/2019/08/24/%E4%BA%92%E5%A8%B1%E7%A0%94%E5%8F%91%E5%87%89%E9%9D%A2%E7%BB%8F/"/>
+    <id>http://yukuaifan.xyz/2019/08/24/互娱研发凉面经/</id>
+    <published>2019-08-24T05:37:38.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="直接上题目。"><a href="#直接上题目。" class="headerlink" title="直接上题目。"></a>直接上题目。</h2><ul><li>首先自我介绍，balabala</li><li>程序题，m个数中随机抽取n个数返回，要求时间复杂度为n</li></ul><figure class="highlight plain"><figcaption><span>lang: c++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; suijichouqu(int m,int n)&#123;</span><br><span class="line">    vector&lt;int&gt; out;</span><br><span class="line">    vector&lt;bool&gt; ifexsit;</span><br><span class="line">    for(int i=0;i&lt;m;i++)&#123;</span><br><span class="line">        ifexsit.push_back(false);</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=0;i&lt;n;i++)&#123;//每次循环添加一个，</span><br><span class="line">        int ra=rand()%m;</span><br><span class="line">        while(ifexsit[ra])&#123;//是否已经存在，如果存在就取后面一个数再判断</span><br><span class="line">            ra++;</span><br><span class="line">            if(ra==m)&#123;</span><br><span class="line">                ra=0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        out.push_back(ra);</span><br><span class="line">        ifexsit[ra]=true;</span><br><span class="line">    &#125;</span><br><span class="line">    return out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>深度/广度优先搜索的实现，递归和非递归实现</li><li>c和c++区别</li><li>多态，虚函数，为什么不能在构造函数里调用虚函数。</li><li>一个类中默认声明的函数有哪些</li><li>一个结构体，包含几个基本类型变量(包括static 变量)，问结构体的所占内存大小</li><li>谈谈虚拟内存</li><li>tcp和udp</li><li>谈谈死锁</li><li>程序题，int类型比如1234返回一个int 4321。</li></ul><figure class="highlight plain"><figcaption><span>lang: c++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">int weishu(int m)&#123;//m 最高为位数个位为0</span><br><span class="line">    </span><br><span class="line">    int out=0;</span><br><span class="line">    while((m/=10)&gt;0)&#123;</span><br><span class="line">        out++;</span><br><span class="line">    &#125;</span><br><span class="line">    return out;</span><br><span class="line">&#125;</span><br><span class="line">int zhuanzhi(int m)&#123;</span><br><span class="line">    int n=0;int flag=false;</span><br><span class="line">    if(m&lt;0)&#123;m=-m;flag=true;&#125;//当m为负数</span><br><span class="line">    while(m&gt;0)&#123;</span><br><span class="line">        n+=m%10*pow(10, weishu(m));</span><br><span class="line">        m/=10;</span><br><span class="line">    &#125;</span><br><span class="line">    if(flag)n=-n;</span><br><span class="line">    return n;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><ul><li>shared_ptr;</li><li>抽象类和接口共同点和不同点。</li><li>程序(游戏)设计模式，比如单例模式，命令模式等等</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;直接上题目。&quot;&gt;&lt;a href=&quot;#直接上题目。&quot; class=&quot;headerlink&quot; title=&quot;直接上题目。&quot;&gt;&lt;/a&gt;直接上题目。&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;首先自我介绍，balabala&lt;/li&gt;
+&lt;li&gt;程序题，m个数中随机抽取n个数返回，要求时间复
+      
+    
+    </summary>
+    
+    
+      <category term="凉面经" scheme="http://yukuaifan.xyz/tags/%E5%87%89%E9%9D%A2%E7%BB%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>mesh绳子</title>
+    <link href="http://yukuaifan.xyz/2019/08/22/mesh%E7%BB%B3%E5%AD%90/"/>
+    <id>http://yukuaifan.xyz/2019/08/22/mesh绳子/</id>
+    <published>2019-08-22T11:28:50.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前言，shader绳子失败了，但是昨天上午前辈给我说他们之前有个游戏画车子行径轨迹的功能和这个很像。思路就是自定义mesh。然后往上加点。</p></blockquote><p>从之前的cocos项目改到unity中还是挺费劲的，相当于实现一个cocosGraphics的功能。另外<br><font color="#ff0000">一定记得在改mesh时先Clear()</font>因为这个找了一个小时bug。</p><p><a href="https://github.com/Yellowjump/unity_mesh_rope" target="_blank" rel="noopener">github上传了assets文件夹</a></p><blockquote><p>以下是unityH5发布，但感觉锯齿好严重</p></blockquote><div style="position: relative;width: 100%;height: 500px;left: 0; right:0;padding-bottom: 0%;border:0px solid #111"><iframe src="https://Yellowjump.github.io/project/rope_unityh5_0.3" style="position: absolute;width: 100%;height: 100%; left: 0; right: 0"> </iframe></div><blockquote><p>下面是Android版本录屏</p></blockquote><div style="position: relative;width: 100%;height: 0;padding-bottom: 75%;"><iframe src="'+ id + '" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;前言，shader绳子失败了，但是昨天上午前辈给我说他们之前有个游戏画车子行径轨迹的功能和这个很像。思路就是自定义mesh。然后往上加点。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;从之前的cocos项目改到unity中还是挺费劲的，相当于实现一个
+      
+    
+    </summary>
+    
+    
+      <category term="绳子" scheme="http://yukuaifan.xyz/tags/%E7%BB%B3%E5%AD%90/"/>
+    
+      <category term="unity" scheme="http://yukuaifan.xyz/tags/unity/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>shader绳子</title>
+    <link href="http://yukuaifan.xyz/2019/08/19/shader%E7%BB%B3%E5%AD%90/"/>
+    <id>http://yukuaifan.xyz/2019/08/19/shader绳子/</id>
+    <published>2019-08-19T12:58:45.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>近期又没有任务，于是打算做完绳子<del>橡皮筋</del></p></blockquote><h2 id="先说思路"><a href="#先说思路" class="headerlink" title="先说思路"></a>先说思路</h2><ul><li><p>前期已经靠绘制系统画好了绳子，但是可惜线条不支持图片的填充。于是想着用shader使一个<del>或多个</del>绳子片段伸长或弯曲。来达到画绳子的效果。</p></li><li><p>所需要的接口</p><ol><li>lineTo(pos1,pos2,width)</li><li>moveTo(pos1,width)</li><li>circle()</li><li>arc()  //保存弧线路径</li><li>strike  //画出所有保存的路线<h1 id="8-21"><a href="#8-21" class="headerlink" title="8-21"></a>8-21</h1></li></ol></li><li><p>想要实现的话</p><blockquote><p><del>原本只有四个定点，拉长或者旋转还好说，但是弧线的话，要么就多个片段，即每个弧线都用一个obj，要么就添加顶点。</del></p></blockquote><blockquote><p><del>思考了一下，发现不能太改动顶点着色，而应该改变片元着色。对没有的地方透明度为0。现在考虑的是每个片段用一个obj。毕竟更方便或是更常见的方式我还没学，先这样试试吧。</del></p></blockquote><ol><li><p><del>直线部分。这部分应该是其中最简单的。pos1，pos2，为世界坐标。更改modelMat</del></p><blockquote><p>做完了之后发现虽然能调节长度和uv偏移但是由于有很多的长度和uv偏移不同的线，给每个线段一个材质又感觉浪费。故该方法好像不行，<del>我好难啊</del></p></blockquote></li></ol></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;近期又没有任务，于是打算做完绳子&lt;del&gt;橡皮筋&lt;/del&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;先说思路&quot;&gt;&lt;a href=&quot;#先说思路&quot; class=&quot;headerlink&quot; title=&quot;先说思路&quot;&gt;&lt;/a&gt;先说思路&lt;/h2&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="cocos" scheme="http://yukuaifan.xyz/tags/cocos/"/>
+    
+      <category term="绳子" scheme="http://yukuaifan.xyz/tags/%E7%BB%B3%E5%AD%90/"/>
+    
+      <category term="shader" scheme="http://yukuaifan.xyz/tags/shader/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>DamageSys</title>
+    <link href="http://yukuaifan.xyz/2019/08/16/DamageSys/"/>
+    <id>http://yukuaifan.xyz/2019/08/16/DamageSys/</id>
+    <published>2019-08-16T04:11:28.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>两纵排壮汉站左右两边激情♂︎互射，每个壮汉都有等级，血量，护甲，攻击力等基础属性。还有技能属性。等级大于技能开启值才拥有技能</p></blockquote><h1 id="怎么设计伤害系统。"><a href="#怎么设计伤害系统。" class="headerlink" title="怎么设计伤害系统。"></a>怎么设计伤害系统。</h1><ol><li><p>首先得对壮汉信息进行储存和管理</p><ul><li><p>当然直接设计一个class Guy</p><figure class="highlight plain"><figcaption><span>lang: TS</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">class Guy&#123;</span><br><span class="line">    Level:number;</span><br><span class="line">    HP:number;</span><br><span class="line">    shield:number;</span><br><span class="line">    ATK:number;</span><br><span class="line">    skill:number[];//改壮汉所有的技能索引，又有skill都在表中</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul></li><li><p>互相伤害的机制</p><ol><li>A射B，发射子弹，子弹携带A的attackMsg:AttackMsg;<ul><li>attackMsg会根据角色技能初始化<figure class="highlight plain"><figcaption><span>lang: TS</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class AttackMsg&#123;</span><br><span class="line">    source:obj;</span><br><span class="line">    ATK:number;//基础攻击</span><br><span class="line">    critical:number;//暴击</span><br><span class="line">    //等对ATK数值的影响</span><br><span class="line">    debuff:[];//眩晕，灼烧，减攻速，破甲等</span><br><span class="line">    pingpongSurplus:number=0;//剩余弹射次数</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul></li><li>子弹调用B的beAttack(attackMsg:AttackMsg);/* 根据自身技能进行处理*/HP减少，掉血表现<ul><li>是否有debuff免疫，如果没有就查看msg是否有debuff。有就改变状态，若状态被改变<ul><li>重新生成自己的attackMsg，对每个debuff定时</li></ul></li></ul></li></ol></li><li><p>对debuff的处理<br> 依据debuff和自身状态，技能改变自身状态。初始化计时器，重复m次，每次间隔1秒</p></li></ol><table><thead><tr><th>hero</th><th align="center">level</th><th align="center">HP</th><th align="center">shield</th><th align="center">ATK</th><th align="center">skill1</th><th align="center">skill2</th><th align="center">skill3</th></tr></thead><tbody><tr><td>1</td><td align="center">1</td><td align="center">100</td><td align="center">100</td><td align="center">20</td><td align="center"></td><td align="center"></td><td align="center"></td></tr><tr><td>2</td><td align="center">3</td><td align="center">200</td><td align="center">100</td><td align="center">10</td><td align="center"></td><td align="center"></td><td align="center"></td></tr></tbody></table><ol start="4"><li>技能<ol><li>根据触发流程。<ul><li>随机触发或每隔一段时间触发，比如无敌，</li><li>攻击前具有，比如加攻击力，加护甲，加血量，暴击 ，吸血，眩晕，护盾等</li><li>攻击时积累，比如狂热（每次攻击加攻速），vn的三连</li><li>被攻击时触发，，反弹，免疫特效</li><li>攻击对象死亡时反馈</li></ul></li></ol></li><li>人物属性<ol><li>固有状态，血量，护甲，护盾剩余，命中，暴击，是否有灼烧等</li><li>将消失的状态，，是否无敌，是否被灼烧，被眩晕，被减速。</li><li>随机属性,间隔属性，无敌。</li><li>攻击积累效果，加攻速，vn第三圈真伤。</li><li>被攻击时效果，魔免，当前是否无敌，反弹等</li><li>死亡时触发效果，给队友增益，给对手反馈等。</li></ol></li><li>流程<ol><li>人物初始化，读取技能，初始化固有状态，初始化自身attackMsg，被攻击效果，死亡效果</li><li>人物攻击，向对象传递attackMsg<del>调用对方的被攻击函数</del>，自身攻击积累处理函数</li><li>收击角色处理attackMsg。被攻击时效果。对attackMsg的source进行反馈</li><li>若角色死亡，调用死亡时反馈。</li><li>跟新每个角色随机属性。是否无敌。，处理将消失的状态。</li></ol></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;两纵排壮汉站左右两边激情♂︎互射，每个壮汉都有等级，血量，护甲，攻击力等基础属性。还有技能属性。等级大于技能开启值才拥有技能&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;怎么设计伤害系统。&quot;&gt;&lt;a href=&quot;#怎么设计伤害系统。&quot; cla
+      
+    
+    </summary>
+    
+    
+      <category term="互相伤害系统" scheme="http://yukuaifan.xyz/tags/%E4%BA%92%E7%9B%B8%E4%BC%A4%E5%AE%B3%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cocos绳子</title>
+    <link href="http://yukuaifan.xyz/2019/08/02/cocos%E7%BB%B3%E5%AD%90/"/>
+    <id>http://yukuaifan.xyz/2019/08/02/cocos绳子/</id>
+    <published>2019-08-02T11:39:13.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="绳子橡皮筋"><a href="#绳子橡皮筋" class="headerlink" title="绳子橡皮筋"></a>绳子<del>橡皮筋</del></h1><hr><blockquote><p>前段时间需要在Cocos上实现绳子<del>橡皮筋</del>绕柱子的效果。</p></blockquote><ul><li><p>原先最先想到的是重复生成数量很多的小块，运用cocos自带的物理系统。可惜物理系统也不是我等杂鱼能随心所欲操控的，出现了绳子断裂，或是提高物理刷新率却消耗太高。更别提在转弯处小块之间的连接也不对。总之错误很多。故这种方法对我来说不行。</p></li><li><p>然后想到了绘图系统，只记录经过的柱子，绳子<del>橡皮筋</del>全画出来。</p></li><li><p>下面是iframe片段的测试</p></li></ul><div style="position: relative;width: 100%;height: 10%;left: 0; right:0;padding-bottom: 75%;border:3px solid #111"><iframe src="https://Yellowjump.github.io/project/rope" style="position: absolute;width: 100%;height: 100%; left: 0; right: 0"> </iframe></div>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;绳子橡皮筋&quot;&gt;&lt;a href=&quot;#绳子橡皮筋&quot; class=&quot;headerlink&quot; title=&quot;绳子橡皮筋&quot;&gt;&lt;/a&gt;绳子&lt;del&gt;橡皮筋&lt;/del&gt;&lt;/h1&gt;&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;前段时间需要在Cocos上实现绳子&lt;del&gt;橡皮筋&lt;/de
+      
+    
+    </summary>
+    
+    
+      <category term="cocos" scheme="http://yukuaifan.xyz/tags/cocos/"/>
+    
+      <category term="绳子" scheme="http://yukuaifan.xyz/tags/%E7%BB%B3%E5%AD%90/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>第一篇杂谈</title>
+    <link href="http://yukuaifan.xyz/2019/08/02/%E7%AC%AC%E4%B8%80%E7%AF%87%E6%9D%82%E8%B0%88/"/>
+    <id>http://yukuaifan.xyz/2019/08/02/第一篇杂谈/</id>
+    <published>2019-08-02T08:49:38.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="开始写博客啦😂哈哈哈"><a href="#开始写博客啦😂哈哈哈" class="headerlink" title="开始写博客啦😂哈哈哈"></a>开始写博客啦😂哈哈哈</h1><ul><li>大三结束的暑假终于开始频繁登陆GitHub，以及搭建自己的页面记录学习历程，emmm，应该不算太晚。这两天在hexo上面瞎搅和，前端知识停留在web实验课的结课作业上，想要自定义主题或者修改他人主题以达到效果现在还是不行。实习现在没事干，过几天新项目开始应该就会开始排UI了。</li></ul><ul><li>放一个几天前的Demo结束吧<div style="position: relative;width: 100%;height: 0;padding-bottom: 75%;"><iframe src="'+ id + '" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe></div></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;开始写博客啦😂哈哈哈&quot;&gt;&lt;a href=&quot;#开始写博客啦😂哈哈哈&quot; class=&quot;headerlink&quot; title=&quot;开始写博客啦😂哈哈哈&quot;&gt;&lt;/a&gt;开始写博客啦😂哈哈哈&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;大三结束的暑假终于开始频繁登陆GitHub，以及搭建自己
+      
+    
+    </summary>
+    
+    
+      <category term="杂谈" scheme="http://yukuaifan.xyz/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>contentTest</title>
+    <link href="http://yukuaifan.xyz/2019/08/01/contentTest/"/>
+    <id>http://yukuaifan.xyz/2019/08/01/contentTest/</id>
+    <published>2019-08-01T11:57:44.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<ul><li>图片<br>下面是一张图片<br><img src="/images/pika.jpg" alt="皮卡丘"><br><img src="http://pwvy5ljmv.bkt.clouddn.com/pika.jpg?imageView2/2/w/200/h/200/q/75" alt="pika"><br>下面是gif<br><img src="http://pwvy5ljmv.bkt.clouddn.com/gif_animation_001.gif?imageView2/2/w/200/h/200/q/75" alt="rope"><br>下面是mp4<div id="dplayer0" class="dplayer hexo-tag-dplayer-mark" style="margin-bottom: 20px;"></div><script>(function(){var player = new DPlayer({"container":document.getElementById("dplayer0"),"theme":"#FADFA3","loop":true,"video":{"url":"http://pwvy5ljmv.bkt.clouddn.com/movie.mp4"}});window.dplayers||(window.dplayers=[]);window.dplayers.push(player);})()</script></li><li>普通的代码块<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert(&apos;Hello World!&apos;);</span><br></pre></td></tr></table></figure></li><li>指定语言<figure class="highlight plain"><figcaption><span>lang: c++</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[var a=1; ]</span><br></pre></td></tr></table></figure></li><li>附加说明<figure class="highlight plain"><figcaption><span>Array.map</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array.map(callback[, thisArg])</span><br></pre></td></tr></table></figure></li><li>附加说明和网址<figure class="highlight plain"><figcaption><span>_.compact</span><a href="http://underscorejs.org/#compact" target="_blank" rel="noopener">Underscore.js</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_.compact([0, 1, false, 2, &apos;&apos;, 3]);</span><br><span class="line">=&gt; [1, 2, 3]</span><br></pre></td></tr></table></figure><div style="position: relative;width: 100%;height: 100%;left: 0; right: 5%;padding-bottom: 75%;border:30px solid #000"><iframe src="https://Yellowjump.github.io/project/AnimatedStar.html" style="position: absolute;width: 100%;height: 100%; left: 0; right: 0"> </iframe></div></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ul&gt;
+&lt;li&gt;图片&lt;br&gt;下面是一张图片&lt;br&gt;&lt;img src=&quot;/images/pika.jpg&quot; alt=&quot;皮卡丘&quot;&gt;&lt;br&gt;&lt;img src=&quot;http://pwvy5ljmv.bkt.clouddn.com/pika.jpg?imageView2/2/w/200/h
+      
+    
+    </summary>
+    
+    
+      <category term="测试" scheme="http://yukuaifan.xyz/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+      <category term="图片" scheme="http://yukuaifan.xyz/tags/%E5%9B%BE%E7%89%87/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>这是第二次测试</title>
+    <link href="http://yukuaifan.xyz/2019/08/01/hello-world/"/>
+    <id>http://yukuaifan.xyz/2019/08/01/hello-world/</id>
+    <published>2019-08-01T11:15:00.000Z</published>
+    <updated>2020-07-28T10:42:56.410Z</updated>
+    
+    <content type="html"><![CDATA[<p>+网页跳转测试:<a href="https://www.baidu.com" target="_blank" rel="noopener">百度</a><br>+html文件访问:<a href="https://Yellowjump.github.io/project/AnimatedStar.html" target="_blank" rel="noopener">paperjs</a><br>+cocos打包游戏:<a href="https://Yellowjump.github.io/project/rope/" target="_blank" rel="noopener">rope</a></p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330height=86src=" music.163.com outchain player?type="2&id=28018264&auto=0&height=66"""> asdas</iframe>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;+网页跳转测试:&lt;a href=&quot;https://www.baidu.com&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;百度&lt;/a&gt;&lt;br&gt;+html文件访问:&lt;a href=&quot;https://Yellowjump.github.io/project/
+      
+    
+    </summary>
+    
+    
+      <category term="测试" scheme="http://yukuaifan.xyz/tags/%E6%B5%8B%E8%AF%95/"/>
+    
+  </entry>
+  
+</feed>

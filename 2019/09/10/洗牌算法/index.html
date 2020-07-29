@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="愉快饭"><meta name="description" content="游戏开发学习博客"><link rel="alternative" href="/atom.xml" title="愉快饭的博客" type="application/atom+xml"><link rel="icon" href="images/favicon.png"><title>洗牌算法 - 愉快饭的博客</title><link rel="stylesheet" href="../../../../css/main.css"><link rel="stylesheet" href="../../../../js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="../../../../js/jquery-3.1.1.min.js"></script><script src="../../../../js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0"><header class="head"><h1 class="head-title u-fl"><a href="/">愉快饭的博客</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="../../../../tags">标签</a></li><li class="head-nav__item"><a class="head-nav__link" href="../../../../archives">目录</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"><time class="post__time" datetime="2019-09-10T03:46:48.000Z">2019 - 09 - 10 11:46:48</time><h1 class="post__title"><a href>洗牌算法</a></h1><div class="post__main echo"><blockquote>
+<p>看面经过程中看到了洗牌算法，自己也来总结记录哈。<br>参考的大佬文章:<br><a href="https://blog.csdn.net/qq_26399665/article/details/79831490" target="_blank" rel="noopener">https://blog.csdn.net/qq_26399665/article/details/79831490</a><br><a href="http://c.biancheng.net/view/1352.html" target="_blank" rel="noopener">http://c.biancheng.net/view/1352.html</a></p>
+</blockquote>
+<h1 id="rand和srand"><a href="#rand和srand" class="headerlink" title="rand和srand"></a>rand和srand</h1><ul>
+<li><p>在说洗牌算法前，先说说c++随机数。</p>
+<p>  C++ 库有一个名为 rand()的函数，范围在0至RAND_MAX 间。RAND_MAX定义在stdlib.h, 其值为2147483647。并且，该函数返回的数字其实是伪随机数。该算法需要一个起始值，称为种子，以生成数字。如果没有给出一个种子，那么它将在每次运行时产生相同的数字流。</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main() &#123;</span><br><span class="line">    for(int i=0;i&lt;10;i++)</span><br><span class="line">        cout&lt;&lt;rand()%10&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">//    两次运行结果相同。</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>要在每次运行程序时获得不同的随机数字流，则必须为随机数生成器提供一个种子以开始。在 C++ 中，这是通过调用 srand 函数完成的。在 rand 被调用之前，srand 函数要先被调用，并且 srand 在整个程序中仅被调用一次。</p>
+<p>  获取种子值的另一个常见做法是调用 time 函数，它是 C++ 标准库的一部分。</p>
+<p>  time 函数返回从 1970 年 1 月 1 日午夜开始到现在逝去的秒数，因此每次运行程序时，它都将提供不同的种子值。下面程序演示了 time 函数的用法。请注意，在调用它时必须给它传递一个参数 0。同时程序中包含一个新的头文件 ctime，此头文件是使用 time 函数所必需的。<del>但在xcode中不添加头文件也能运行</del></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">using namespace std;</span><br><span class="line">int main() &#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    for(int i=0;i&lt;10;i++)&#123;</span><br><span class="line">        cout&lt;&lt;rand()%10&lt;&lt;endl;</span><br><span class="line">    &#125;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line">//每次运行结果不同</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="洗牌算法"><a href="#洗牌算法" class="headerlink" title="洗牌算法"></a>洗牌算法</h1><ul>
+<li>由抽牌、换牌和插牌衍生出三种洗牌算法，其中抽牌和换牌分别对应Fisher-Yates Shuffle和Knuth-Durstenfeld Shhuffle算法。<ol>
+<li>Fisher-Yates Shuffle算法<blockquote>
+<p>原始数组n中随机抽k个数。</p>
+</blockquote>
+<ol>
+<li>随机从原始数组中取一个，装入新数组。</li>
+<li>压缩原始数组</li>
+<li>新数组大小若未满k，重复步骤1，2.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void Fisher_Yates_Shuffle(vector&lt;int&gt;&amp; arr,vector&lt;int&gt;&amp; res,int k)</span><br><span class="line">&#123;</span><br><span class="line">    if(k&gt;arr.size())return;</span><br><span class="line">    srand((int)time(0));</span><br><span class="line">    int r;</span><br><span class="line">    for (int i=0;i&lt;k;++i)</span><br><span class="line">    &#123;</span><br><span class="line">        r=rand()%arr.size();</span><br><span class="line">        res.push_back(arr[r]);</span><br><span class="line">        arr.erase(arr.begin()+r);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//时间复杂度为O(n*n),空间复杂度为O(n).</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li>Knuth-Durstenfeld Shuffle算法<blockquote>
+<p>Knuth 和 Durstenfeld  在Fisher 等人的基础上对算法进行了改进，在原始数组上对数字进行交互，省去了额外O(n)的空间</p>
+</blockquote>
+<ol>
+<li>从n-i中随机选择一位，将其与第n-i位交换，i++</li>
+<li>若i==k，结束，否则重复步骤1.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void Knuth_Durstenfeld_Shuffle(vector&lt;int&gt;&amp;arr,int k)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i=0;i&lt;k;i++)</span><br><span class="line">    &#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    swap(arr[rand()%(arr.size()-1-i)],arr[arr.size()-1-i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//获取的k个随机数在原始数组末尾的k位。原始数组被修改了，这是一个原地打乱顺序的算法。</span><br><span class="line">//时间复杂度为O(n),空间复杂度为O(1),缺点必须知道数组长度n.</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="蓄水池抽样"><a href="#蓄水池抽样" class="headerlink" title="蓄水池抽样"></a>蓄水池抽样</h1><ul>
+<li><p>同样是从n个数中抽取k个，但是如果n非常大或者不确定<del>总之就是没法一次性的将原始数据装入内存</del>，那么这个时候问题就是蓄水池抽样。</p>
+<blockquote>
+<p>思路:我们先抽前k个，在依次循环判断后面的n-k个数，每个数被选中的概率是k/x。(x为该数在原始数组中的位置)，若被选中，替换k中随机一个。</p>
+</blockquote>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">void Reservoir_Sampling(vector&lt;int&gt;&amp; arr,int k)</span><br><span class="line">&#123;</span><br><span class="line">    int r;</span><br><span class="line">    for (int i=k;i&lt;arr.size();++i)</span><br><span class="line">    &#123;</span><br><span class="line">        srand((int)time(0));</span><br><span class="line">        r=rand()%(i+1);</span><br><span class="line">        if (r&lt;k)</span><br><span class="line">        swap(arr[r],arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//以上为在原数组中交换，时间复杂度为O(n)。</span><br><span class="line">//一下为数组指针</span><br><span class="line">void Reservoir_Sampling_Pointerconst( int *input, int n, int *result, int m)</span><br><span class="line">&#123;</span><br><span class="line">    srand(int(time(0)));</span><br><span class="line">    if (n &lt; m || input == NULL || result == NULL)return;</span><br><span class="line">    for (int i = 0; i != m; ++i)</span><br><span class="line">        result[i] = input[i];        </span><br><span class="line">    for (int i = m; i != n; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        int j = rand()%i;</span><br><span class="line">        if (j &lt; m)</span><br><span class="line">        result[j] = input[i];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</div></header><footer class="post__foot u-cf"><ul class="post__tag u-fl"><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/c/">c++</a></li><li class="post__tag__item"><a class="post__tag__link" href="../../../../tags/算法/">算法</a></li></ul></footer></article></main><footer class="foot"><div class="foot-copy">&copy; 2016 - 2020 愉快饭</div></footer><script src="../../../../js/scroller.js"></script><script src="../../../../js/main.js"></script></body></html>
