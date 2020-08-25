@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yukuaifan.xyz/"/>
-  <updated>2020-07-28T10:42:56.410Z</updated>
+  <updated>2020-08-24T07:46:16.813Z</updated>
   <id>http://yukuaifan.xyz/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>新进项目组渣渣经验</title>
+    <link href="http://yukuaifan.xyz/2020/08/24/%E6%96%B0%E8%BF%9B%E9%A1%B9%E7%9B%AE%E7%BB%84%E6%B8%A3%E6%B8%A3%E7%BB%8F%E9%AA%8C/"/>
+    <id>http://yukuaifan.xyz/2020/08/24/新进项目组渣渣经验/</id>
+    <published>2020-08-24T07:22:12.000Z</published>
+    <updated>2020-08-24T07:46:16.813Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>今天算是打工了一个月了,大部分时间都是在看文档，看代码，<del>划大船</del>熟悉项目。组长当初让我二选一学习的模块。脑瘫加蜜汁自信选了个难的。当初看了一周文档还迷迷糊糊<del>现在也不是哪都通透</del>。昨晚睡觉终于思索了一下，算是一个总结。</p></blockquote><p>对于unity客户端来说，了解一个模块，先搞清楚那个是什么。做了啥。之后再考虑，初始化，每帧逻辑<del>如果有</del>,执行函数调用堆栈<del>什么时候在哪被调用</del>。搞明白后最后考虑，初始化依赖那些东西，什么表什么文件。</p><p>如果是一个很大的模块，技能，背包，任务。那么就可以先找到主干update，再到之后就容易找到对应的manager，之后init，update，end之类的方法就一目了然<del>嗯一定是这样简单没错</del></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;今天算是打工了一个月了,大部分时间都是在看文档，看代码，&lt;del&gt;划大船&lt;/del&gt;熟悉项目。组长当初让我二选一学习的模块。脑瘫加蜜汁自信选了个难的。当初看了一周文档还迷迷糊糊&lt;del&gt;现在也不是哪都通透&lt;/del&gt;。昨晚睡觉终于思索了一下，算是一
+      
+    
+    </summary>
+    
+    
+      <category term="zzjy" scheme="http://yukuaifan.xyz/tags/zzjy/"/>
+    
+  </entry>
   
   <entry>
     <title>字节跳动凉面筋</title>
@@ -154,9 +178,9 @@
     <link href="http://yukuaifan.xyz/2019/09/27/unity%E4%B8%AD%E5%8D%8F%E7%A8%8B%E4%BD%BF%E7%94%A8/"/>
     <id>http://yukuaifan.xyz/2019/09/27/unity中协程使用/</id>
     <published>2019-09-27T12:15:49.000Z</published>
-    <updated>2020-07-28T10:42:56.410Z</updated>
+    <updated>2020-08-25T01:38:52.096Z</updated>
     
-    <content type="html"><![CDATA[<blockquote><p>点一下，人物以速度v前进m距离或者s时间。我以前要么update中写分支，要么弄成动画。现在才发现协程那么方便。</p></blockquote><p>协程概念很多大佬都讲的非常明白，这里放个地址<a href="https://blog.csdn.net/hhh132/article/details/78937146。" target="_blank" rel="noopener">https://blog.csdn.net/hhh132/article/details/78937146。</a></p><p>那么直接上代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveByPosAndTime(Vector3 startPos,Vector3 endPos,float time=0.5f)&#123;</span><br><span class="line">    float dur = 0.0f;</span><br><span class="line">    while(dur&lt;=time)</span><br><span class="line">    &#123;</span><br><span class="line">        dur += Time.deltaTime;</span><br><span class="line">        transform.localPosition = Vector3.Lerp(startPos, endPos+playerOffset, dur/time);</span><br><span class="line">        //Debug.Log(dur+&quot;\t&quot;+transform.localPosition+&quot;\tstart:&quot;+startPos);</span><br><span class="line">        yield return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>即是每帧执行MoveByPosAndTime中语句直到yield return。</p><p>如果是飞行棋这样的。同样也可以</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveGrids(int Num,float speed=1f)&#123;    </span><br><span class="line">    yield return new WaitForSeconds(2f);//移动前停留，主要是等骰子动画完成</span><br><span class="line">    while(Num&gt;0)&#123;</span><br><span class="line">        yield return MoveByPosAndTime(curGrid.position,nextGrid.position,0.5/speed);</span><br><span class="line">        curGrid=nextGrid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<blockquote><p>点一下，人物以速度v前进m距离或者s时间。我以前要么update中写分支，要么弄成动画。现在才发现协程那么方便。</p></blockquote><p>协程概念很多大佬都讲的非常明白，这里放个地址<a href="https://blog.csdn.net/hhh132/article/details/78937146" target="_blank" rel="noopener">https://blog.csdn.net/hhh132/article/details/78937146</a></p><p>那么直接上代码</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveByPosAndTime(Vector3 startPos,Vector3 endPos,float time=0.5f)&#123;</span><br><span class="line">    float dur = 0.0f;</span><br><span class="line">    while(dur&lt;=time)</span><br><span class="line">    &#123;</span><br><span class="line">        dur += Time.deltaTime;</span><br><span class="line">        transform.localPosition = Vector3.Lerp(startPos, endPos+playerOffset, dur/time);</span><br><span class="line">        //Debug.Log(dur+&quot;\t&quot;+transform.localPosition+&quot;\tstart:&quot;+startPos);</span><br><span class="line">        yield return null;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>即是每帧执行MoveByPosAndTime中语句直到yield return。</p><p>如果是飞行棋这样的。同样也可以</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IEnumerator MoveGrids(int Num,float speed=1f)&#123;    </span><br><span class="line">    yield return new WaitForSeconds(2f);//移动前停留，主要是等骰子动画完成</span><br><span class="line">    while(Num&gt;0)&#123;</span><br><span class="line">        yield return MoveByPosAndTime(curGrid.position,nextGrid.position,0.5/speed);</span><br><span class="line">        curGrid=nextGrid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
     
     <summary type="html">
     
