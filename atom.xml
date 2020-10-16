@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yukuaifan.xyz/"/>
-  <updated>2020-08-24T07:46:16.813Z</updated>
+  <updated>2020-10-16T02:11:16.325Z</updated>
   <id>http://yukuaifan.xyz/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>C#闭包</title>
+    <link href="http://yukuaifan.xyz/2020/10/14/%E9%97%AD%E5%8C%85/"/>
+    <id>http://yukuaifan.xyz/2020/10/14/闭包/</id>
+    <published>2020-10-14T11:21:58.000Z</published>
+    <updated>2020-10-16T02:11:16.325Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>之前面试的时候就被问到闭包，现在才开始看，放一篇很不错的blog<a href="https://www.cnblogs.com/birdwudi/archive/2010/08/20/1804342.html" target="_blank" rel="noopener">https://www.cnblogs.com/birdwudi/archive/2010/08/20/1804342.html</a>,哎呀，其他人要看就去那边看好了，我就不写了（溜</p></blockquote><p>咳咳，介于原博客的界面比较的简洁，看起来相对费力，还是写一些吧。<br>首先是例1：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public static void Main()</span><br><span class="line">&#123;</span><br><span class="line">    List&lt;Action&gt; actions = new List&lt;Action&gt;();</span><br><span class="line">    for (int counter = 0; counter &lt; 10; counter++)</span><br><span class="line">    &#123;</span><br><span class="line">        int copy = counter;</span><br><span class="line">        actions.Add(() =&gt; Console.WriteLine(copy));</span><br><span class="line">    &#125;</span><br><span class="line">    //执行动作</span><br><span class="line">    foreach (Action action in actions) action();//0123456789</span><br><span class="line">&#125;    </span><br><span class="line">//此上等价于</span><br><span class="line">class TempClass</span><br><span class="line">&#123;</span><br><span class="line">    public int copy;</span><br><span class="line">    public void TempMethod()</span><br><span class="line">    &#123;</span><br><span class="line">        Console.WriteLine(copy);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">public static void Main()</span><br><span class="line">&#123;</span><br><span class="line">    for (int i = 0; i &lt; 10; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        TempClass tc = new TempClass();</span><br><span class="line">        tc.copy = i;</span><br><span class="line">        actions.Add(tc.TempMethod);</span><br><span class="line">    &#125;</span><br><span class="line">    foreach (Action action in actions) action();//0123456789</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>例2：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt; 10; i++)</span><br><span class="line">&#123;</span><br><span class="line">    actions.Add(() =&gt; Console.WriteLine(i));</span><br><span class="line">&#125;</span><br><span class="line">//执行动作</span><br><span class="line">foreach (Action action in actions) action();//全是10</span><br><span class="line">//等价于</span><br><span class="line">TempClass tc = new TempClass();</span><br><span class="line">for(tc.copy = 0; tc.copy &lt; 10; tc.copy++)</span><br><span class="line">&#123;</span><br><span class="line">    actions.Add(tc.TempMethod);</span><br><span class="line">&#125;</span><br><span class="line">foreach (Action action in actions) action();</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;blockquote&gt;
+&lt;p&gt;之前面试的时候就被问到闭包，现在才开始看，放一篇很不错的blog&lt;a href=&quot;https://www.cnblogs.com/birdwudi/archive/2010/08/20/1804342.html&quot; target=&quot;_blank&quot; r
+      
+    
+    </summary>
+    
+    
+      <category term="C#" scheme="http://yukuaifan.xyz/tags/C/"/>
+    
+  </entry>
   
   <entry>
     <title>新进项目组渣渣经验</title>
